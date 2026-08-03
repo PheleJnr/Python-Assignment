@@ -10,12 +10,18 @@ def apply_discount(item_name, original_price, promo_code):
         discount = 0
 
     discounted_price = original_price - (original_price * discount)
+
     return discounted_price
 
 
-print(apply_discount("Shoes", 100, "SAVE10"))
+item_name = input("Enter an item: ")
+
+original_price = int(input("Enter the Price: "))
+
+promo_code = input("Enter the promo code: ")
 
 
+print(apply_discount(item_name, original_price, promo_code))
 
 
 

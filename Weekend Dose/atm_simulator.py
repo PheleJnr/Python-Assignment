@@ -1,6 +1,7 @@
 def atm_simulator():
 
     balance = 1000
+   
     
     while True:
         print("\n1. Deposit")
@@ -12,8 +13,12 @@ def atm_simulator():
         match choice:
             case "1":
                 amount = float(input("Enter amount to deposit: "))
-                balance = balance + amount
+                while amount < 0:
+                    amount = float(input("Enter a valid amount: "))
+            
+                balance += amount
                 print(f"Deposited #{amount}. New balance: #{balance}")
+               
             
             case "2":
                 amount = float(input("Enter amount to withdraw: "))

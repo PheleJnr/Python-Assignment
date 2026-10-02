@@ -4,7 +4,7 @@ class Video:
             raise ValueError("Duration is invalid and must be greater than 0")
         if not (0 <= position <= duration):
             raise ValueError("Position is invalid and must be between 0 and duration")
-        
+
         self.title = title
         self.duration = duration
         self.position = position
@@ -23,5 +23,8 @@ class Video:
 
     def restart(self) -> None:
         self.position = 0
+
+    def time_remaining(self) -> float:
+        return self.duration - self.position
 
 

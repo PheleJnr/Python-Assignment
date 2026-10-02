@@ -2,6 +2,7 @@ import unittest
 from contextlib import redirect_stdout
 import io
 
+
 from video import Video
 
 class VideoTestCase(unittest.TestCase):
@@ -134,7 +135,45 @@ class VideoTestCase(unittest.TestCase):
         self.assertEqual(self.video.position, 2)
 
 
+    def test_that_time_remaining_equals_the_start_of_duration_of_the_video(self):
+        self.video.time_remaining()
+        self.assertEqual(self.video.time_remaining(), 10)
 
+    def test_that_time_remaining_decreases_after_advancing_of_the_video(self):
+        self.video.advance(5)
+        self.assertEqual(self.video.time_remaining(), 5)
+
+    def test_that_time_remaining_decreases_after_multiple_advancing_of_the_video(self):
+        self.video.advance(5)
+        self.video.advance(3)
+        self.assertEqual(self.video.time_remaining(), 2)
+
+    def test_that_time_remaining_resets_after_advancing_and_restarting_of_the_video(self):
+        self.video.advance(5)
+        self.video.advance(3)
+        self.video.restart()
+        self.assertEqual(self.video.time_remaining(), 10)
+
+    def test_that_time_remaining_support_fractional_minutes_of_the_video(self):
+        self.video.advance(3.5)
+        self.video.advance(2.0)
+        self.assertEqual(self.video.time_remaining(), 4.5)
+
+    def test_that_time_remaining_is_zero_at_the_end_of_the_video(self):
+        self.video.advance(5)
+        self.video.advance(5)
+        self.assertEqual(self.video.time_remaining(), 0)
+
+    def test_that_time_remaining_is_zero_after_overshooting_the_video(self):
+        self.video.advance(5)
+        self.video.advance(5)
+        self.video.advance(5)
+        self.assertEqual(self.video.time_remaining(), 0)
+
+    def test_that_time_remaining_does_not_change_the_position_of_the_video(self):
+       self.video.advance(5)
+       self.video.time_remaining()
+       self.assertEqual(self.video.position, 5)
 
 
 
